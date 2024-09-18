@@ -13,6 +13,8 @@ class Model extends BaseModel
     // turn off the auto incerment property
     public $incrementing = false;
 
+    protected $guarded = [];
+
     protected static function boot() {
         parent::boot();
 
