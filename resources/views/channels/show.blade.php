@@ -7,9 +7,11 @@
                 @csrf
                 @method('PATCH')
                 <div class="flex items-start mx-auto pb-10 gap-4 w-[50%]">
-               
-                    <img onclick="document.getElementById('image').click()" class="rounded-full cursor-pointer" style="width: 150px; height: 150px;" src="{{$channel->photo ? $channel->photo : '/def_profile.png'}}" alt="Bonnie image" />
-                    <input onchange="document.getElementById('update-channel-form').submit()" type="file" name="image" id="image" class="hidden">
+                    <div class="w-[200px] relative">
+                        <img onclick="document.getElementById('image').click()" class="rounded-full cursor-pointer" style="width: 150px; height: 150px;" src="{{$channel->image() ? $channel->image() : '/def_profile.png'}}" alt="Bonnie image" />
+                        <img src="/photo-camera.svg" class="bottom-0 right-0 absolute" style="width: 30px; height: 30px;" alt="">
+                        <input onchange="document.getElementById('update-channel-form').submit()" type="file" name="image" id="image" class="hidden">
+                    </div>
                  
                     <div class="flex flex-col w-[100%] gap-4">
                         <input type="text" name="name" class="border-[1px] rounded-lg py-1 px-2 border-gray-300" value="{{$channel->name}}">
