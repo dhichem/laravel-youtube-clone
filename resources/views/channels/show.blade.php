@@ -2,6 +2,13 @@
 
 @section('content')
     <div class="my-10">
+        @if ($errors->any())
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="w-fit mx-auto my-2 py-1 px-2 border-2 border-red-300 text-red-400 rounded-md">{{$error}}</li>
+                @endforeach
+            </ul>
+        @endif
         @if (Auth::id() && Auth::id() == $channel->user_id)
             <form id="update-channel-form" action="{{route('channels.update', $channel->id)}}" enctype="multipart/form-data" method="POSt">
                 @csrf
@@ -20,14 +27,14 @@
                             <a href="#"
                                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-[#ff302f] hover:bg-[#ff5c5c] rounded-lg focus:ring-4 focus:outline-none no-underline">
                                 Subscribe</a>
-                            <input type="button" value="Update channel" class="border-2 border-[#ff302f] text-[#ff302f] rounded-lg px-4">
+                            <input onclick="document.getElementById('update-channel-form').submit()" type="button" value="Update channel" class="border-2 border-[#ff302f] text-[#ff302f] rounded-lg px-4">
                         </div>
                     </div>
                 </div>
             </form>
         @else
         <div class="flex items-center mx-auto pb-10 gap-4 w-[50%]">
-            <img class="rounded-full" style="width: 150px; height: 150px;" src="{{$channel->photo ? $channel->photo : '/def_profile.png'}}" alt="Bonnie image" />
+            <img class="rounded-full" style="width: 150px; height: 150px;" src="{{$channel->image() ? $channel->image() : '/def_profile.png'}}" alt="Bonnie image" />
             <div class="flex flex-col">
                 <h5 class="mb-1 text-xl font-medium">{{$channel->name}}</h5>
                 <span class="text-sm text-gray-500 dark:text-gray-400 text-wrap">{{$channel->description ? $channel->description : 'No description available'}}</span>
