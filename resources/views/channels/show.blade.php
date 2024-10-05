@@ -22,6 +22,7 @@
                  
                     <div class="flex flex-col w-[100%] gap-4">
                         <input type="text" name="name" class="border-[1px] rounded-lg py-1 px-2 border-gray-300" value="{{$channel->name}}">
+                        <span class="text-gray-700">{{$channel->getSubscriptionCount()}} subscribers • 0 videos</span>
                         <textarea name="description" id="description" class="border-[1px] rounded-lg py-1 px-2 border-gray-300" style="width: 100%" rows="4">{{$channel->description ? $channel->description : 'No description available'}}</textarea>
                         <div class="flex mt-4 md:mt-6 gap-3">
                             <a href="#"
@@ -35,13 +36,12 @@
         @else
         <div class="flex items-center mx-auto pb-10 gap-4 w-[50%]">
             <img class="rounded-full" style="width: 150px; height: 150px;" src="{{$channel->image() ? $channel->image() : '/def_profile.png'}}" alt="Bonnie image" />
-            <div class="flex flex-col">
-                <h5 class="mb-1 text-xl font-medium">{{$channel->name}}</h5>
+            <div class="flex flex-col gap-2">
+                <h2 class="text-3xl font-semibold">{{$channel->name}}</h2>
+                <span class="text-gray-700">{{$channel->getSubscriptionCount()}} subscribers • 0 videos</span>
                 <span class="text-sm text-gray-500 dark:text-gray-400 text-wrap">{{$channel->description ? $channel->description : 'No description available'}}</span>
-                <div class="flex mt-4 md:mt-6">
-                    <a href="#"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-[#fd8484] rounded-lg focus:ring-4 focus:outline-none no-underline">
-                        Subscribe</a>
+                <div id="app" class="flex mt-4 md:mt-6">
+                        <subscribe-button></subscribe-button>
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -15,6 +16,17 @@ class Channel extends Model implements HasMedia
 
     public function User(): BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    public function Subscriptions(): HasMany {
+        return $this->hasMany(Subscription::class);
+    }
+
+    // Method to get the count of subscriptions
+    public function getSubscriptionCount()
+    {
+        // Use `withCount()` to get the subscription count
+        return $this->subscriptions()->count();
     }
 
     // return media(image) of channel (if exists)

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @vite('resources/css/app.css')
 
-        <title>Laravel</title>
+        <title>Youtube Clone</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,3 +20,11 @@
 
     </body>
 </html>
+
+<script>
+    window.AuthUser = @json(auth()->user());
+
+    window.__auth = function() {
+        return window.AuthUser || null;
+    }
+</script>
