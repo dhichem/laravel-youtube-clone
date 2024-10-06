@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -25,8 +26,15 @@ class Channel extends Model implements HasMedia
     // Method to get the count of subscriptions
     public function getSubscriptionCount()
     {
-        // Use `withCount()` to get the subscription count
         return $this->subscriptions()->count();
+    }
+
+    // chack if user is scubscribed
+    public function isSubscribed() {
+        if(Auth::check()) {
+            return $this->subscriptions()->where('user_id', auth()->user()->id)->exists();
+        }
+        return false;
     }
 
     // return media(image) of channel (if exists)
