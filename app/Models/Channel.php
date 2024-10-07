@@ -32,7 +32,7 @@ class Channel extends Model implements HasMedia
     // chack if user is scubscribed
     public function isSubscribed() {
         if(Auth::check()) {
-            return $this->subscriptions()->where('user_id', auth()->user()->id)->exists();
+            return $this->subscriptions()->where('user_id', auth()->user()->id)->first();
         }
         return false;
     }

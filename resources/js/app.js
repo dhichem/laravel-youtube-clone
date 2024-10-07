@@ -17,6 +17,8 @@ const app = createApp({});
 
 import SubscribeButton from './components/SubscribeButton.vue';
 app.component('subscribe-button', SubscribeButton);
+import SubscribersVideosCount from './components/SubscribersVideosCount.vue';
+app.component('subscribers-videos-count', SubscribersVideosCount);
 // import ExampleComponent from './components/ExampleComponent.vue';
 // app.component('example-component', ExampleComponent);
 

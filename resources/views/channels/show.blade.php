@@ -20,11 +20,11 @@
                         <input onchange="document.getElementById('update-channel-form').submit()" type="file" name="image" id="image" class="hidden">
                     </div>
                  
-                    <div class="flex flex-col w-[100%] gap-4">
+                    <div id="app" class="flex flex-col w-[100%] gap-4">
                         <input type="text" name="name" class="border-[1px] rounded-lg py-1 px-2 border-gray-300" value="{{$channel->name}}">
-                        <span class="text-gray-700">{{$channel->getSubscriptionCount()}} subscribers • 0 videos</span>
+                        <subscribers-videos-count :subscriber-count="{{$channel->getSubscriptionCount()}}"></subscribers-videos-count>
                         <textarea name="description" id="description" class="border-[1px] rounded-lg py-1 px-2 border-gray-300" style="width: 100%" rows="4">{{$channel->description ? $channel->description : 'No description available'}}</textarea>
-                        <div id="app" class="flex mt-4 md:mt-6 gap-3">
+                        <div class="flex mt-4 md:mt-6 gap-3">
                             <input onclick="document.getElementById('update-channel-form').submit()" type="button" value="Update channel" class="border-2 py-2 border-[#ff302f] text-[#ff302f] rounded-lg px-4">
                         </div>
                     </div>
@@ -33,12 +33,12 @@
         @else
         <div class="flex items-center mx-auto pb-10 gap-4 w-[50%]">
             <img class="rounded-full" style="width: 200px; height: 150px;" src="{{$channel->image() ? $channel->image() : '/def_profile.png'}}" alt="Bonnie image" />
-            <div class="flex flex-col gap-2">
+            <div id="app" class="flex flex-col gap-2">
                 <h2 class="text-3xl font-semibold">{{$channel->name}}</h2>
-                <span class="text-gray-700">{{$channel->getSubscriptionCount()}} subscribers • 0 videos</span>
+                <subscribers-videos-count :subscriber-count="{{$channel->getSubscriptionCount()}}"></subscribers-videos-count>
                 <span class="text-sm text-gray-500 dark:text-gray-400 text-wrap">{{$channel->description ? $channel->description : 'No description available'}}</span>
-                <div id="app" class="flex mt-4 md:mt-6">
-                        <subscribe-button :is-subscribed="{{$channel->isSubscribed()}}"></subscribe-button>
+                <div class="flex mt-4 md:mt-6">
+                        <subscribe-button :channel="{{$channel}}" :subscription-prop="{{$channel->isSubscribed()}}" :is-subscribed-prop="{{$channel->isSubscribed() ? true : false}}"></subscribe-button>
                 </div>
             </div>
         </div>

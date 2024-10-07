@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         $users = User::all();
         $channels = Channel::all();
 
-        Subscription::factory(500)->create([
+        Subscription::factory(1500)->create([
             'user_id' => $users->random()->id,
             'channel_id' => $channels->random()->id
         ]);
