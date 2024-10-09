@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\Video;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -27,6 +28,10 @@ class Channel extends Model implements HasMedia
     public function getSubscriptionCount()
     {
         return $this->subscriptions()->count();
+    }
+
+    public function videos(): HasMany {
+        return $this->hasMany(Video::class);
     }
 
     // chack if user is scubscribed

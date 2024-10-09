@@ -58,6 +58,10 @@
                 @endif
             </div>
             @else
+                <div class="flex gap-6 items-center">
+                @if (request()->routeIs('channels.show'))
+                <a href="{{route('channel.upload', $channel->id)}}" class="flex items-center gap-2 border-[2px] no-underline text-gray-700 hover:bg-[#ff8a8a] rounded-2xl px-2 py-1 border-[#ff8a8a]">Upload video <img style="width: 20px" src="/video-icon.svg" alt=""></a>
+                @endif
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
@@ -79,6 +83,7 @@
                         </form>
                     </div>
                 </li>
+              </div>
             @endguest
         </ul>
       </div>
