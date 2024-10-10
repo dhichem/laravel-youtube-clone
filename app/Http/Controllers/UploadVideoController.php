@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Videos\ConvertForStreaming;
 use App\Models\Channel;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class UploadVideoController extends Controller
             $video->path = request()->file('video')->store("channels/{$channel->id}");
     
             if ($video->save()) {
+                ConvertForStreaming::dispatch($video);
                 return response()->json($video);
             } else {
                 return response()->json(['error' => 'Video could not be saved'], 500);
