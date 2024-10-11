@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('path');
+            $table->integer('percentage')->nullable();
+            $table->integer('thumbnail')->nullable();
             $table->timestamps();
         });
     }

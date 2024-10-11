@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\UploadVideoController;
+use App\Http\Controllers\VideoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +30,5 @@ Route::middleware(['auth'])->group(function() {
     ->only(['store', 'destroy']);
     Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
     Route::post('channels/{channel}/videos', [UploadVideoController::class, 'store']);
+    Route::get('videos/{video}', [VideoController::class, 'show']);
 });

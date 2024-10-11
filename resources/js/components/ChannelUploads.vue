@@ -24,17 +24,18 @@
                 <img
                     class="bg-gray-400"
                     style="width: 220px; height: 150px"
-                    src=""
+                    :src="item.percentage ? item.thumbnail : '/video_default_thumbnail.png'"
                     alt=""
                 />
                 <div class="flex flex-col items-start gap-2 w-full ml-12">
-                    <span class="text-xl font-semibold">{{ item.name }}</span>
-                    <span>Uploading... ({{ progressValue[item.name] }}%)</span>
+                    <a v-if="item.percentage && item.percentage == 100" target="_blank":href="`/videos/${item.id}`">{{ item.title }}</a>
+                    <span v-else class="text-xl font-semibold">{{ item.title || item.name }}</span>
+                    <span>{{item.percentage ? item.percentage == 100 ? 'Processing completed' : 'Processing...' : 'Uploading...'}} ({{progressValue[item.name] || item.percentage}}%)</span>
                     <div id="bar" class="bg-gray-300 w-full h-2 rounded-xl">
                         <div
                             id="progress-bar"
-                            class="bg-green-600 h-full rounded-xl"
-                            :style="`width: ${progressValue[item.name]}%; transition: width 0.5s ease-in-out;`"
+                            :class="`bg-green-600 h-full rounded-xl`"
+                            :style="`width: ${progressValue[item.name] || item.percentage}%; transition: width 0.5s ease-in-out;`"
                         ></div>
                     </div>
                 </div>
@@ -44,12 +45,16 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data: function () {
         return {
             fileSelected: false,
             videos: [],
-            progressValue: {}
+            progressValue: {},
+            uploads: [],
+            intervals: []
         };
     },
     props: {
@@ -84,7 +89,33 @@ export default {
                             this.progressValue[video.name] = Math.floor(event.loaded / event.total * 100);
                         }
                     }
-                );
+                ).then((res) => {
+                    this.uploads = [
+                        ...this.uploads,
+                        res.data
+                    ]
+                });
+            });
+
+            axios.all(uploads).then(() => {
+                this.videos = this.uploads;
+
+                this.videos.forEach(video => {
+                    this.intervals[video.id] = setInterval(() => {
+                        axios.get(`/videos/${video.id}`).then((res) => {
+                            if(res.data.percentage == 100) {
+                                clearInterval(this.intervals[video.id])
+                            }
+
+                            this.videos = this.videos.map(video => {
+                                if(video.id == res.data.id) {
+                                    return res.data;
+                                }
+                                return video;
+                            })
+                        })
+                    }, 3000)
+                })
             });
         },
     },

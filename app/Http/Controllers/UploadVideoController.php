@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\Videos\ConvertForStreaming;
+use App\Jobs\Videos\CreateVideoThumbnail;
 use App\Models\Channel;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class UploadVideoController extends Controller
             $video->path = request()->file('video')->store("channels/{$channel->id}");
     
             if ($video->save()) {
+                CreateVideoThumbnail::dispatch($video);
                 ConvertForStreaming::dispatch($video);
                 return response()->json($video);
             } else {

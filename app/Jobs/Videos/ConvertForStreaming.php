@@ -17,6 +17,7 @@ class ConvertForStreaming implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $video;
+    public $lastPerc = 0;
 
     /**
      * Create a new job instance.
@@ -31,6 +32,8 @@ class ConvertForStreaming implements ShouldQueue
      */
     public function handle(): void
     {
+        
+
         $low = (new X264())->setKiloBitrate('250');
         $medium = (new X264())->setKiloBitrate('500');
         $high = (new X264())->setKiloBitrate('750');
@@ -38,6 +41,13 @@ class ConvertForStreaming implements ShouldQueue
 
         FFMpeg::fromDisk('local')->open($this->video->path)
         ->exportForHLS()
+        ->onProgress(function($percentage) {
+            if($percentage - $this->lastPerc >= 10 || $percentage == 100) {
+                $this->video->update([
+                    'percentage' => $percentage
+                ]);
+            }
+        })
         ->addFormat($low)
         ->addFormat($medium)
         ->addFormat($high)
