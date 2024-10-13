@@ -21,6 +21,8 @@ import SubscribersVideosCount from './components/SubscribersVideosCount.vue';
 app.component('subscribers-videos-count', SubscribersVideosCount);
 import ChannelUploads from './components/ChannelUploads.vue';
 app.component('channel-uploads', ChannelUploads);
+import LikeUnlikeButton from './components/LikeUnlikeButton.vue';
+app.component('like-unlike-button', LikeUnlikeButton);
 
 // import ExampleComponent from './components/ExampleComponent.vue';
 // app.component('example-component', ExampleComponent);

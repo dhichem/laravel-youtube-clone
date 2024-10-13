@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UploadVideoController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +26,13 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('channels', 'App\Http\Controllers\ChannelController');
 
+Route::get('videos/{video}', [VideoController::class, 'show']);
+Route::put('videos/{video}', [ViewController::class, 'updateViews']);
+Route::put('videos/{video}/update', [VideoController::class, 'update'])->middleware(['auth'])->name('videos.update');
+
 Route::middleware(['auth'])->group(function() {
     Route::resource('channels/{channel}/subscriptions', 'App\Http\Controllers\SubscriptionController')
     ->only(['store', 'destroy']);
     Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
     Route::post('channels/{channel}/videos', [UploadVideoController::class, 'store']);
-    Route::get('videos/{video}', [VideoController::class, 'show']);
 });

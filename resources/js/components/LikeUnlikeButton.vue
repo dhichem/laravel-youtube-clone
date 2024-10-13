@@ -1,36 +1,33 @@
 <template>
-    <button
-        @click="toggleSubscription"
-        class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-[#ff302f] hover:bg-[#ff5c5c] rounded-lg focus:ring-4 focus:outline-none"
-    >
-        {{ isSubscribed ? "Unsubscribe" : "Subscribe" }}
-    </button>
+    <div class="flex items-center gap-2 bg-gray-300 rounded-lg h-full px-3">
+        <button class="rounded-l-lg flex gap-2 items-center"><img src="/like.svg" style="height: 20px;" alt="">{{ likeCount }}</button>
+        <div style="border-left:1px solid #000;height:23px"></div>
+        <button class="rounded-r-lg flex gap-2 items-center"><img src="/unlike.svg" style="height: 20px;" alt="">{{ likeCount }}</button>
+    </div>
 </template>
 
 <script>
-import Axios from 'axios';
-
   export default {
     props: {
-        isSubscribedProp: {
+        likeCount: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        unlikeCount: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        isReactedToProp: {
             type: Boolean,
             required: true,
             default: false
-        },
-        subscriptionProp: {
-            type: Object,
-            required: true,
-            default: {}
-        },
-        channel: {
-            type: Object,
-            required: true
         }
     },
     data: function () {
         return {
-            isSubscribed: this.isSubscribedProp,
-            subscription: this.subscriptionProp
+            isReactedTo: this.isReactedToProp
         }
     },
     methods: {

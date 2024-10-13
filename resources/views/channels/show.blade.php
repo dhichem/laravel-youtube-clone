@@ -10,7 +10,7 @@
             </ul>
         @endif
         @if (Auth::id() && Auth::id() == $channel->user_id)
-            <form id="update-channel-form" action="{{route('channels.update', $channel->id)}}" enctype="multipart/form-data" method="POSt">
+            <form id="update-channel-form" action="{{route('channels.update', $channel->id)}}" enctype="multipart/form-data" method="POST">
                 @csrf
                 @method('PATCH')
                 <div class="flex items-start mx-auto pb-10 gap-4 w-[50%]">
@@ -32,7 +32,7 @@
             </form>
         @else
         <div class="flex items-center mx-auto pb-10 gap-4 w-[50%]">
-            <img class="rounded-full" style="width: 200px; height: 150px;" src="{{$channel->image() ? $channel->image() : '/def_profile.png'}}" alt="Bonnie image" />
+            <img class="rounded-full" style="width: 150px; height: 150px;" src="{{$channel->image() ? $channel->image() : '/def_profile.png'}}" alt="Bonnie image" />
             <div id="app" class="flex flex-col gap-2">
                 <h2 class="text-3xl font-semibold">{{$channel->name}}</h2>
                 <subscribers-videos-count :subscriber-count="{{$channel->getSubscriptionCount()}}"></subscribers-videos-count>
