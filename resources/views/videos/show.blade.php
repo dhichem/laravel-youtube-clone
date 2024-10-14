@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="py-6 px-8 flex gap-6">
-        <div class="w-[65%] flex flex-col gap-3">
+        <div id="app" class="w-[65%] flex flex-col gap-3">
             @if ($video->editable())
                 <form id="update-video-form" action="{{route('videos.update', $video->id)}}" method="POST" class="flex flex-col gap-3">
                 @csrf
@@ -60,6 +60,18 @@
             @if ($video->editable())
                 </form>
             @endif
+
+  
+            <div class="flex flex-col gap-2 w-full">
+                
+                <span>123 Comments</span>
+
+                <div class="flex gap-4">
+                    <img class="rounded-full" style="width: 40px; height: 40px;"
+                        src="{{ Auth::check() && auth()->user()->channel->image() ? auth()->user()->channel->image() : '/def_profile.png' }}"/>
+                    <comment></comment>
+                </div>
+            </div>
         </div>
         <div class="flex-1 flex">
             <span class="text-lg">Suggestions</span>
