@@ -16,11 +16,11 @@ class Channel extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
 
-    public function User(): BelongsTo {
+    public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
 
-    public function Subscriptions(): HasMany {
+    public function subscriptions(): HasMany {
         return $this->hasMany(Subscription::class);
     }
 

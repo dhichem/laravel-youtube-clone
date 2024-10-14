@@ -5,8 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Channel;
+use App\Models\Comment;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Models\Video;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,19 +35,37 @@ class DatabaseSeeder extends Seeder
             'email' => 'sara@gmail.com'
         ]);
 
-        Channel::factory()->create([
+        $channel_1 = Channel::factory()->create([
             'user_id' => $user1->id
         ]);
-        Channel::factory()->create([
+
+        $channel_2 = Channel::factory()->create([
             'user_id' => $user2->id
         ]);
 
-        $users = User::all();
-        $channels = Channel::all();
+        // $users = User::all();
+        // $channels = Channel::all();
 
         Subscription::factory(1500)->create([
-            'user_id' => $users->random()->id,
-            'channel_id' => $channels->random()->id
+            'user_id' => $user1->id,
+            'channel_id' => $channel_2->id
+        ]);
+
+        $video = Video::factory()->create([
+            'channel_id' => $channel_2->id
+        ]);
+
+        Comment::factory(100)->create([
+            'video_id' => $video->id,
+            'user_id' => $user1->id
+        ]);
+
+        $comment = Comment::first();
+
+        Comment::factory(30)->create([
+            'video_id' => $video->id,
+            'user_id' => $user1->id,
+            'comment_id' => $comment->id
         ]);
     }
 }

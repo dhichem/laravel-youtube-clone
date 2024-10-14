@@ -20,6 +20,10 @@ class Video extends Model
         return $this->hasMany(View::class);
     }
 
+    public function comments(): HasMany {
+        return $this->hasMany(Comment::class)->whereNull('comment_id');
+    }
+
     public function votes(): MorphMany {
         return $this->morphMany(Vote::class, 'voteable');
     }
@@ -38,6 +42,11 @@ class Video extends Model
     public function getDownVotesCount()
     {
         return $this->votes()->where('type', 'down')->count();
+    }
+
+    public function getCommentsCount()
+    {
+        return $this->hasMany(Comment::class)->count();
     }
 
     public function checkIfReacted()

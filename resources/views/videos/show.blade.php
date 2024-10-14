@@ -64,13 +64,10 @@
   
             <div class="flex flex-col gap-2 w-full">
                 
-                <span>123 Comments</span>
+                <span>{{$video->getCommentsCount()}} Comments</span>
 
-                <div class="flex gap-4">
-                    <img class="rounded-full" style="width: 40px; height: 40px;"
-                        src="{{ Auth::check() && auth()->user()->channel->image() ? auth()->user()->channel->image() : '/def_profile.png' }}"/>
-                    <comment></comment>
-                </div>
+                <comment :video="{{$video}}" :comments="{{$video->comments}}" 
+                   ></comment>
             </div>
         </div>
         <div class="flex-1 flex">

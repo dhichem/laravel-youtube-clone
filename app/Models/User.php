@@ -26,12 +26,16 @@ class User extends Authenticatable
         });
     }
 
-    public function Channel(): HasOne {
+    public function channel(): HasOne {
         return $this->hasOne(Channel::class);
     }
 
-    public function Views(): HasMany {
+    public function views(): HasMany {
         return $this->hasMany(View::class);
+    }
+
+    public function comments(): HasMany {
+        return $this->hasMany(Comment::class);
     }
 
     /**
