@@ -44,7 +44,6 @@ import Axios from 'axios';
                         this.isSubscribed = false;
                     });
                 } else {
-                    console.log('dfdffdfdfd')
                     Axios.post(`/channels/${this.channel.id}/subscriptions`).then((res) => {
                         this.subscription = res;
                         this.isSubscribed = true;

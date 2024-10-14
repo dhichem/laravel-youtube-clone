@@ -3,6 +3,7 @@
 use App\Http\Controllers\UploadVideoController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ViewController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,5 @@ Route::middleware(['auth'])->group(function() {
     ->only(['store', 'destroy']);
     Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
     Route::post('channels/{channel}/videos', [UploadVideoController::class, 'store']);
+    Route::post('votes/{id}/{type}/{model_type}', [VoteController::class, 'store']);
 });

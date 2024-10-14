@@ -35,8 +35,9 @@
                         :is-subscribed-prop="{{ $video->channel->isSubscribed() ? true : false }}"></subscribe-button>
                 </div>
                 <div>
-                    <like-unlike-button :like-count="12" :unlike-count="2"
-                        :is-reacted-to-prop="false"></like-unlike-button>
+                    <like-unlike-button :like-count-prop="{{$video->getUpVotesCount()}}" :unlike-count-prop="{{$video->getDownVotesCount()}}"
+                        :is-reacted-to-prop="{{$video->checkIfReacted() ? $video->checkIfReacted() : null}}" owner="{{$video->channel->user_id}}"
+                        entity-id="{{$video->id}}" :entity-type="'video'"></like-unlike-button>
                 </div>
             </div>
 
