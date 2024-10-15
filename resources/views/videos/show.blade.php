@@ -67,7 +67,7 @@
                 <span>{{$video->getCommentsCount()}} Comments</span>
 
                 <comment :video="{{$video}}" :comments="{{$video->comments}}" 
-                   ></comment>
+                    profile-img="{{ Auth::check() && auth()->user()->channel->image() ? auth()->user()->channel->image() : '/def_profile.png' }}"></comment>
             </div>
         </div>
         <div class="flex-1 flex">

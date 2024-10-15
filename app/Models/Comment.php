@@ -12,6 +12,8 @@ class Comment extends Model
 
     protected $with = ['user', 'user.channel'];
 
+    protected $appends = ['repliesCount'];
+
     public function video(): BelongsTo {
         return $this->belongsTo(Video::class);
     }
@@ -22,5 +24,9 @@ class Comment extends Model
 
     public function replies(): HasMany {
         return $this->hasMany(Comment::class, 'comment_id')->whereNotNull('comment_id');
+    }
+
+    public function getRepliesCountAttribute() {
+        return $this->replies->count();
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-2 w-full">
+    <div class="flex flex-col gap-6 w-full">
         <div class="flex gap-4">
             <img
                 class="rounded-full"
@@ -17,8 +17,11 @@
                     rows="1"
                     v-model="content"
                     @input="test"
+                    @focus="showButton = true"
+                    @blur="showButton = false"
                 ></textarea>
                 <button
+                v-if="showButton"
                     class="ml-auto py-2 px-3 rounded-lg text-white"
                     :class="
                         content.length != 0
@@ -42,18 +45,31 @@
                 <div class="flex flex-col gap-1">
                     <span>{{ item.user.channel.name }}</span>
                     <span>{{ item.content }}</span>
+                    <div @click="toggleReplies(item)" v-if="item.repliesCount > 0" class="text-[#ff302f] px-3 py-1 rounded-lg hover:bg-[#ffbdbd] w-fit cursor-pointer">{{ item.repliesCount }} Replies</div>
+                    <div>
+                        <Reply ref="reply" v-if="item.show" :comment="item"></Reply>
+                    </div>
                 </div>
+            </div>
+            <div class="flex justify-center">
+                <button @click="fetchComments(1)" class="py-2 px-3 rounded-lg text-white bg-[#ff302f] hover:bg-[#ff7c7c]" :class="current_page == last_page ? 'pointer-events-none bg-[#ff7c7c]' : ''">Show more</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Reply from './Reply.vue';
+
 export default {
     data: function () {
         return {
             comments: [],
-            content: ""
+            content: "",
+            last_page: 0,
+            per_page: 10,
+            current_page: 1,
+            showButton: false
         };
     },
     props: {
@@ -68,6 +84,9 @@ export default {
             default: {},
         }
     },
+    components: {
+        Reply
+    },
     mounted() {
         this.fetchComments();
     },
@@ -79,10 +98,19 @@ export default {
                 this.style.height = this.scrollHeight + "px"; // Set height based on content
             });
         },
-        fetchComments() {
-            axios.get(`/videos/${this.video.id}/comments`).then((res) => {
-                this.comments = res.data.data;
+        fetchComments(step = 0) {
+            if(this.current_page == this.last_page)
+                return;
+            this.current_page += step;
+            axios.get(`/videos/${this.video.id}/comments?page=${this.current_page}&per_page=${this.per_page}`).then((res) => {
+                this.comments = this.comments.concat(res.data.data);
+                this.current_page = res.data.current_page;
+                this.last_page = res.data.last_page;
             })
+        },
+        toggleReplies(item) {
+            item.show = !item.show;
+            // this.$refs.reply.fetchReplies();
         },
         postComment() {},
     },
