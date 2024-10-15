@@ -11,6 +11,11 @@
                 <div class="flex flex-col gap-1">
                     <span>{{ item.user.channel.name }}</span>
                     <span>{{ item.content }}</span>
+                    <div class="flex">
+                        <like-unlike-button :like-count-prop="item.upVotesCount" :unlike-count-prop="item.downVotesCount"
+                        :is-reacted-to-prop="item.checkIfReacted" :owner="item.user_id"
+                        :entity-id="item.id" :entity-type="'comment'"></like-unlike-button>
+                    </div>
                 </div>
             </div>
             <div class="flex justify-left">

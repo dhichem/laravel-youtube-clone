@@ -1,8 +1,8 @@
 <template>
-    <div class="flex items-center gap-2 bg-gray-300 rounded-lg h-full">
-        <button @click="vote('up')" class="rounded-l-lg flex gap-2 px-2 h-full items-center"><ThumbUp :size="20" :fill="getUpReaction"></ThumbUp>{{ likeCountFormat }}</button>
-        <div style="border-left:1px solid #000;height:23px"></div>
-        <button @click="vote('down')" class="rounded-r-lg flex gap-2 px-2 h-full items-center"><ThumbDown :size="20" :fill="getDownReaction"></ThumbDown>{{ unlikeCountFormat }}</button>
+    <div class="flex items-center gap-2 rounded-lg h-full" :class="entityType == 'video' ? 'bg-gray-300' : ''">
+        <button @click="vote('up')" class="flex gap-2 px-2 h-full items-center hover:bg-gray-200" :class="entityType == 'video' ? 'rounded-l-lg' : 'rounded-full py-2'"><ThumbUp :size="20" :fill="getUpReaction"></ThumbUp>{{ likeCountFormat }}</button>
+        <div v-if="entityType == 'video'" style="border-left:1px solid #000;height:23px"></div>
+        <button @click="vote('down')" class="flex gap-2 px-2 h-full items-center hover:bg-gray-200" :class="entityType == 'video' ? 'rounded-r-lg' : 'rounded-full py-2'"><ThumbDown :size="20" :fill="getDownReaction"></ThumbDown>{{ unlikeCountFormat }}</button>
     </div>
 </template>
 
@@ -56,10 +56,10 @@ import ThumbDown from './icons/thumbDown.vue';
     },
     computed: {
         likeCountFormat() {
-            return numeral(this.likeCount).format('0a');
+            return this.likeCount != 0 ? numeral(this.likeCount).format('0a') : '';
         },
         unlikeCountFormat() {
-            return numeral(this.unlikeCount).format('0a');
+            return this.unlikeCount != 0 ? numeral(this.unlikeCount).format('0a') : '';
         },
         getUpReaction() {
             return this.isReactedTo ? this.isReactedTo.type == 'up' ? '#000' : 'none' : 'none';

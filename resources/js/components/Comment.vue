@@ -45,6 +45,11 @@
                 <div class="flex flex-col gap-1">
                     <span>{{ item.user.channel.name }}</span>
                     <span>{{ item.content }}</span>
+                    <div class="flex">
+                        <like-unlike-button :like-count-prop="item.upVotesCount" :unlike-count-prop="item.downVotesCount"
+                        :is-reacted-to-prop="item.checkIfReacted" :owner="item.user_id"
+                        :entity-id="item.id" :entity-type="'comment'"></like-unlike-button>
+                    </div>
                     <div @click="toggleReplies(item)" v-if="item.repliesCount > 0" class="text-[#ff302f] px-3 py-1 rounded-lg hover:bg-[#ffbdbd] w-fit cursor-pointer">{{ item.repliesCount }} Replies</div>
                     <div>
                         <Reply ref="reply" v-if="item.show" :comment="item"></Reply>

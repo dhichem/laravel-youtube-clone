@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,8 @@ class VoteController extends Controller
     public function resolveVotableModel($id, $model_type) {
         if($model_type == 'video') {
             return Video::find($id);
+        } else if($model_type == 'comment') {
+            return Comment::find($id);
         } else {
             return null;
         }
