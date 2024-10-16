@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-    <div class="my-10">
+    <div class="my-10" id="app">
         @if ($errors->any())
             <ul>
                 @foreach ($errors->all() as $error)
@@ -43,5 +43,8 @@
             </div>
         </div>
         @endif
+        <div class="w-[75%] mx-auto">
+            <list-videos :channel="{{$channel}}"></list-videos>
+        </div>
     </div>
 @endsection

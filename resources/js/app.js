@@ -25,6 +25,8 @@ import LikeUnlikeButton from './components/LikeUnlikeButton.vue';
 app.component('like-unlike-button', LikeUnlikeButton);
 import Comment from './components/Comment.vue';
 app.component('comment', Comment);
+import ListVideos from './components/ListVideos.vue';
+app.component('list-videos', ListVideos);
 
 // import ExampleComponent from './components/ExampleComponent.vue';
 // app.component('example-component', ExampleComponent);

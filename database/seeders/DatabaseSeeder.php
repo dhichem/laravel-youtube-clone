@@ -51,9 +51,11 @@ class DatabaseSeeder extends Seeder
             'channel_id' => $channel_2->id
         ]);
 
-        $video = Video::factory()->create([
+        Video::factory(50)->create([
             'channel_id' => $channel_2->id
         ]);
+
+        $video = Video::first();
 
         Comment::factory(100)->create([
             'video_id' => $video->id,

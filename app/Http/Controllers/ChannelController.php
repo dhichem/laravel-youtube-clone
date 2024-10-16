@@ -83,4 +83,8 @@ class ChannelController extends Controller
     {
         //
     }
+
+    public function getAllVideos(Channel $channel) {
+        return response()->json($channel->videos()->paginate());
+    }
 }

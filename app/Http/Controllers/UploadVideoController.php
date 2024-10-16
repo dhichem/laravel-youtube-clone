@@ -15,10 +15,6 @@ class UploadVideoController extends Controller
     }
 
     public function store(Channel $channel) {
-        // return $channel->videos()->create([
-        //     'title' => request()->title,
-        //     'path' => request()->video->store("channels/{$channel->id}")
-        // ]);
 
         if (request()->hasFile('video') && request()->file('video')->isValid()) {
             

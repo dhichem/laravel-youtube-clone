@@ -31,7 +31,7 @@ class Channel extends Model implements HasMedia
     }
 
     public function videos(): HasMany {
-        return $this->hasMany(Video::class);
+        return $this->hasMany('App\Models\Video');
     }
 
     // chack if user is scubscribed

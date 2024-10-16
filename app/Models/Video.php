@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 class Video extends Model
 {
     use HasFactory;
+
+    protected $appends = ['viewsCount'];
 
     public function channel(): BelongsTo {
         return $this->belongsTo(Channel::class);
@@ -29,7 +32,7 @@ class Video extends Model
     }
 
     // Method to get the count of views
-    public function getViewsCount()
+    public function getViewsCountAttribute()
     {
         return $this->views()->count();
     }
@@ -60,5 +63,10 @@ class Video extends Model
     public function editable()
     {
         return Auth::check() && Auth::id() == $this->channel->user_id;
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->diffForHumans(); // Custom format
     }
 }

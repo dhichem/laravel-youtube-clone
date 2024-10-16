@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-6 w-full">
         <div class="flex flex-col gap-4">
-            <div class="flex gap-4" v-for="(item, index) in replies" :key="index">
+            <div class="flex gap-4" v-for="(item) in replies" :key="item.id">
                 <img
                     class="rounded-full"
                     style="width: 40px; height: 40px"
@@ -64,6 +64,9 @@ export default {
                 this.current_page = res.data.current_page;
                 this.last_page = res.data.last_page;
             })
+        },
+        insertNewReply(reply) {
+            this.replies.unshift(reply);
         },
         postComment() {},
     },

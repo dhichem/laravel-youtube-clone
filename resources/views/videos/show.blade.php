@@ -43,8 +43,8 @@
 
             <div class="bg-gray-300 flex flex-col gap-1 rounded-lg p-2">
                 <div class="flex gap-3 font-semibold">
-                    <span>{{ $video->getViewsCount() }} {{ Str::plural('view', $video->getViewsCount()) }}</span>
-                    <span>{{ $video->created_at->diffForHumans() }}</span>
+                    <span>{{ $video->viewsCount }} {{ Str::plural('view', $video->viewsCount) }}</span>
+                    <span>{{ $video->created_at }}</span>
                 </div>
                 <div>
                     @if ($video->editable())

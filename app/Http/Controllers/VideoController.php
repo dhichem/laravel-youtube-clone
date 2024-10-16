@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
+    public function index() {
+        // $this->user();
+        // return response()->json(Video::paginate());
+    }
+
     public function show(Video $video) {
         if(request()->wantsJson()) {
             return response()->json($video);

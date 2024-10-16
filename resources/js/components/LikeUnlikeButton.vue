@@ -75,7 +75,7 @@ import ThumbDown from './icons/thumbDown.vue';
                 return;
             }
 
-            if((this.getUpReaction != 'none' && type == 'up') || (this.getDownReaction != 'none' && type == 'down') || window.__auth().id == this.owner) {
+            if((this.getUpReaction != 'none' && type == 'up') || (this.getDownReaction != 'none' && type == 'down')) {
                 return;
             }
 
