@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UploadVideoController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ViewController;
+use App\Http\Controllers\VoteController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +27,20 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('channels', 'App\Http\Controllers\ChannelController');
+
+Route::get('videos/{video}', [VideoController::class, 'show']);
+Route::put('videos/{video}', [ViewController::class, 'updateViews']);
+Route::put('videos/{video}/update', [VideoController::class, 'update'])->middleware(['auth'])->name('videos.update');
+Route::get('videos/{video}/comments', [CommentController::class, 'index']);
+Route::post('videos/{video}/comments', [CommentController::class, 'store'])->middleware(['auth'])->name('comments.store');
+Route::get('comments/{comment}/replies', [CommentController::class, 'getReplies']);
+Route::get('channels/{channel}/getVideos', [ChannelController::class, 'getAllVideos']);
+
+Route::middleware(['auth'])->group(function() {
+    Route::resource('channels/{channel}/subscriptions', 'App\Http\Controllers\SubscriptionController')
+    ->only(['store', 'destroy']);
+    Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
+    Route::post('channels/{channel}/videos', [UploadVideoController::class, 'store']);
+    Route::post('votes/{id}/{type}/{model_type}', [VoteController::class, 'store']);
+});
